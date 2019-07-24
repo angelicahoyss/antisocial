@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS users;
+
 CREATE TABLE users (
     id SERIAL primary key,
     first VARCHAR(255),

@@ -1,19 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import AnimalsContainer from "./AnimalsContainer";
+// import AnimalsContainer from "./AnimalsContainer";
 import App from "./App";
 import Welcome from "./Welcome";
-// let elem;
+let elem;
 
-// if (location.pathname == "/welcome") {
-//     //they are loggedout
-//     elem = <Welcome />;
-// } else {
-//     elem = <img src="/images/900x650 Logo.png" />;
-// }
-// they are logged in
+if (location.pathname == "/welcome") {
+    //they are loggedout
+    elem = <Welcome />;
+} else {
+    elem = <img src="/images/900x650 Logo.png" />;
+}
+//they are logged in
 
-ReactDOM.render(<Welcome />, document.querySelector("main"));
+ReactDOM.render(elem, document.querySelector("main"));
 
 // export default function HelloWorld() {
 //     return (
