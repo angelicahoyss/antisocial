@@ -9,7 +9,7 @@ if (location.pathname == "/welcome") {
     //they are loggedout
     elem = <Welcome />;
 } else {
-    elem = <img src="/images/900x650 Logo.png" />;
+    elem = <img src="/images/900x650 Logo.png" height={150} />;
 }
 //they are logged in
 

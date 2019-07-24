@@ -3,14 +3,14 @@
 
 import React from "react";
 import axios from "./axios";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
-export default class Registration extends React.Component {
+export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.submit = this.submit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        // this.submit = this.submit.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
     }
     handleChange(e) {
         this.setState({

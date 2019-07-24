@@ -121,5 +121,3 @@ app.post("/login", (req, res) => {
 app.listen(8080, function() {
     console.log("I'm listening.");
 });
-
-//token on petition it was in all input fields on post requests.
