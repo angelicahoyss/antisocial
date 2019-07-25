@@ -16,10 +16,8 @@
         "aws-sdk": "^2.476.0",
         "body-parser": "^1.15.2",
         "express": "^4.14.0",
-<<<<<<< HEAD
         "moment": "^2.24.0",
         "multer": "^1.2.0",
-=======
         "http-proxy-middleware": "^0.19.1",
         "jest": "^24.7.1",
         "multer": "^1.3.0",
@@ -33,7 +31,6 @@
         "redux-devtools-extension": "^2.13.2",
         "redux-promise": "^0.5.3",
         "socket.io": "^2.2.0",
->>>>>>> 1335df8... upgrade react router and react redux
         "spiced-pg": "^1.0.0",
         "uid-safe": "^2.1.4",
         "vue-moment": "^4.0.0"
