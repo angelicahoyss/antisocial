@@ -17,6 +17,7 @@ export default function FindPeople({ id }) {
             } else {
                 (async () => {
                     const searchList = await axios.post("/users.json",{val:searchUsers});
+                    // console.log(searchList.data);
                     setUsers(searchList.data);
                 })();
             }

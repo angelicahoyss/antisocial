@@ -52,11 +52,12 @@ exports.getRecentUsers = function getRecentUsers() {
     );
 };
 
-exports.getFriendships = function getFriendships() {
+exports.getFriendships = function getFriendships(sender, receiver) {
     return db.query(
         `SELECT * FROM friendships
         WHERE (sender_id = $1 AND recever_id = $2)
-        OR (sender_id = $2 AND recever_id = $1)`
+        OR (sender_id = $2 AND recever_id = $1)`,
+        [sender, receiver]
     );
 };
 
@@ -64,7 +65,7 @@ exports.addFriendship = function addFriendship(sender, receiver) {
     return db.query(
         `INSERT into friendships(sender_id, receiver_id, accepted)
         VALUES ($1, $2, $3)
-        RETURNING sender_id, receiver_id. accepted`,
+        RETURNING sender_id, receiver_id, accepted`,
         [sender, receiver]
     );
 };

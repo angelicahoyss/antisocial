@@ -190,6 +190,25 @@ app.post("/users.json", (req, res) => {
     });
 });
 
+app.get("friendshipstatus/:id.json", (req, res) => {
+    db.getFriendships(req.session.userId, req.params.id)
+    }).then(results => {
+        if (!results.rows[0]) {
+            res.json({
+                sender_id: req.session.userId,
+                receiver_id: req.params.id,
+                accepted: false
+            });
+        } else {
+            res.json({
+                results.rows[0]
+            });
+        }
+    }).catch(err => {
+        console.log("err in GET /friendshipstatus: ", err);
+});
+
+
 //--------DO NOT DELETE THIS --------------
 app.get("*", (req, res) => {
     if (!req.session.userId && req.url != "/welcome") {
