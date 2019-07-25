@@ -6,5 +6,7 @@ CREATE TABLE users (
     last VARCHAR(255),
     email VARCHAR (255) UNIQUE,
     password text,
+    image VARCHAR(255),
+    bio text,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

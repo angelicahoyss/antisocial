@@ -6,6 +6,29 @@ const bcrypt = require("./utils/bc");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+const s3 = require("./s3");
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const path = require("path");
+const config = require("./config");
+
+var diskStorage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function(req, file, callback) {
+        uidSafe(24).then(function(uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    }
+});
+
+var uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152
+    }
+});
 
 app.use(compression());
 app.use(bodyParser.json());
@@ -35,21 +58,17 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
-// app.get("/get-animal", (req, res) => {
-//     res.json({
-//         name: "Zebra",
-//         cutenessScore: "pretty cute"
-//     });
-// });
-//--------DO NOT DELETE THIS --------------
-app.get("*", (req, res) => {
-    if (!req.session.userId && req.url != "/welcome") {
-        res.redirect("/welcome");
-    } else {
-        res.sendFile(__dirname + "/index.html");
+//show default image if there is none
+app.get("/user", async (req, res) => {
+    let user = await db.getUserById(req.session.userId);
+    // user = user.rows[0];
+    // console.log("user:", user.rows[0]);
+
+    if (user.rows[0].image === null) {
+        user.rows[0].image = "/images/default.jpg";
     }
+    res.json({ user });
 });
-//--------DO NOT DELETE THIS --------------
 
 app.get("/welcome", (req, res) => {
     if (req.session.userId) {
@@ -68,7 +87,7 @@ app.post("/register", async (req, res) => {
         req.session.userId = id;
         res.json({ success: true });
     } catch (err) {
-        console.log("err in POST /register");
+        console.log("err in POST /register", err);
     }
 });
 //     console.log("request: ", req);
@@ -118,6 +137,36 @@ app.post("/login", (req, res) => {
     });
 });
 
+app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
+    const url = config.s3Url + req.file.filename;
+    // console.log("URL :", url);
+    db.addImage(req.session.userId, url)
+        .then(data => {
+            res.json(data.rows[0]);
+        })
+        .catch(err => {
+            console.log("err in POST / uploadFile", err);
+        });
+});
+
+//--------DO NOT DELETE THIS --------------
+app.get("*", (req, res) => {
+    if (!req.session.userId && req.url != "/welcome") {
+        res.redirect("/welcome");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
+});
+//--------DO NOT DELETE THIS --------------
+
 app.listen(8080, function() {
     console.log("I'm listening.");
 });
+
+//3 components: 1. profile pic, 2. uploader(modal ui for uploading a file) and 3. wrapper called App, single component we pass to react.render
+//3. component will contain profile pic and uploader and a router in part 5.
+//modal should disable background so users can only upload or x
+//uploader will create form data, paste multer stuff in inxdex.js, s3 stuff, identical to imageboard except one difference
+//after s3 is done in imageboard we were inserting new table, instead, here we will do update query to set image req.session.user = newUrl
+//uploader makes new ajax request, append file only
+//as soon as you click on image it should be uploaded onChange handler on the input field. object fit center

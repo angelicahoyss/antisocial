@@ -1,6 +1,3 @@
-//should be class component bc it needs state for:
-//screen needs to update to show error message
-
 import React from "react";
 import axios from "./axios";
 import { Link } from "react-router-dom";
