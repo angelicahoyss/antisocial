@@ -25,6 +25,9 @@ exports.getUserById = function getUserById(id) {
     );
 };
 
-exports.addImage = function addImage(id, image) {
-    return db.query(`UPDATE users SET image = $2 WHERE id = $1`, [id, image]);
+exports.addImage = function addImage(image, id) {
+    return db.query(`UPDATE users SET image = $1 WHERE id = $2 RETURNING *`, [
+        image,
+        id
+    ]);
 };

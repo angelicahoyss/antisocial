@@ -58,18 +58,6 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
-//show default image if there is none
-app.get("/user", async (req, res) => {
-    let user = await db.getUserById(req.session.userId);
-    // user = user.rows[0];
-    // console.log("user:", user.rows[0]);
-
-    if (user.rows[0].image === null) {
-        user.rows[0].image = "/images/default.jpg";
-    }
-    res.json({ user });
-});
-
 app.get("/welcome", (req, res) => {
     if (req.session.userId) {
         res.redirect("/");
@@ -137,16 +125,30 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
-    const url = config.s3Url + req.file.filename;
-    // console.log("URL :", url);
-    db.addImage(req.session.userId, url)
-        .then(data => {
-            res.json(data.rows[0]);
-        })
-        .catch(err => {
-            console.log("err in POST / uploadFile", err);
-        });
+app.post("/upload", uploader.single("file"), s3.upload, async (req, res) => {
+    const image = config.s3Url + req.file.filename;
+
+    try {
+        const data = await db.addImage(image, req.session.userId);
+        console.log("data.URL in index POST upload:", data);
+        res.json(data.rows[0].image);
+    } catch (err) {
+        console.log("err in POST / upload", err);
+    }
+});
+
+//show default image if there is none
+app.get("/user", async (req, res) => {
+    let user = await db.getUserById(req.session.userId);
+    // user = user.rows[0];
+    // console.log("user:", user.rows[0]);
+
+    if (user.rows[0].image === null) {
+        user.rows[0].image = "/images/default.jpg";
+    }
+    console.log("USER.ROWS[0]:", user.rows[0]);
+    console.log("USER URL:", user.rows[0].image);
+    res.json(user.rows[0]);
 });
 
 //--------DO NOT DELETE THIS --------------
@@ -170,3 +172,10 @@ app.listen(8080, function() {
 //after s3 is done in imageboard we were inserting new table, instead, here we will do update query to set image req.session.user = newUrl
 //uploader makes new ajax request, append file only
 //as soon as you click on image it should be uploaded onChange handler on the input field. object fit center
+
+//-----part 4 -------
+//profile component renders profile pic and also print out name
+//component bio editor
+//<BioEditor bio={} />
+//bio editor ajax request, function changes app state, normal post no form data,
+//editing state prop set to true when user clicks a button//
