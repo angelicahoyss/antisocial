@@ -5,8 +5,14 @@ export default class BioEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            addbio: true
+            editing: false
         };
+    }
+
+    changeBio(e) {
+        this.setState({
+            draftBio: e.target.value
+        });
     }
 
     submit() {
@@ -27,15 +33,48 @@ export default class BioEditor extends React.Component {
             <div>
                 {this.state.editing && (
                     <div>
-                        <textarea name="draftBio" />
-                        <button>save</button>
+                        <textarea
+                            name="draftBio"
+                            onChange={e => {
+                                this.changeBio(e);
+                            }}
+                        />
+                        <button onClick={() => this.submit()}>save</button>
                     </div>
                 )}
 
-                {this.props.bio}
+                {this.props.bio && (
+                    <div>
+                        <p>{this.props.bio}</p>
+                        <button
+                            onClick={() =>
+                                this.setState({
+                                    editing: true
+                                })
+                            }
+                        >
+                            edit your bio
+                        </button>
+                    </div>
+                )}
 
-                <button onClick={e => this.setState({ editing: true })}>
-                    add
+                {!this.props.bio && (
+                    <div>
+                        <p>{this.props.bio}</p>
+                        <button
+                            onClick={() =>
+                                this.setState({
+                                    editing: true
+                                })
+                            }
+                        >
+                            add bio
+                        </button>
+                    </div>
+                )}
+
+                <button onClick={e => this.setState({ editing: false })}>
+                    cancel
                 </button>
             </div>
         );

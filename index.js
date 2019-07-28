@@ -151,6 +151,15 @@ app.get("/user", async (req, res) => {
     res.json(user.rows[0]);
 });
 
+app.post("/bio", async (req, res) => {
+    try {
+        await db.addBio(req.body.bio, req.session.userId);
+        res.json(req.body.bio);
+    } catch (err) {
+        console.log("err in POST / bio", err);
+    }
+});
+
 //--------DO NOT DELETE THIS --------------
 app.get("*", (req, res) => {
     if (!req.session.userId && req.url != "/welcome") {

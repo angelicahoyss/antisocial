@@ -16,4 +16,3 @@ export default function Profile(props) {
         </div>
     );
 }
-//{props.profilePic}

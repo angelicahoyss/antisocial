@@ -8,7 +8,8 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            uploaderIsVisible: false
+            uploaderIsVisible: false,
+            bioIsVisible: false
         };
     }
     async componentDidMount() {
@@ -38,12 +39,19 @@ export default class App extends React.Component {
                 <Profile
                     bio={this.state.bio}
                     changeBio={bio => {
-                        this.setState({ success: true });
+                        this.setState({
+                            bio: bio
+                        });
                     }}
                     image={this.state.image}
                     first={this.state.first}
                     last={this.state.last}
-                    onClick={() => this.setState({ uploaderIsVisible: true })}
+                    onClick={() =>
+                        this.setState({
+                            uploaderIsVisible: true,
+                            bioIsVisible: true
+                        })
+                    }
                 />
 
                 {this.state.uploaderIsVisible && (
