@@ -1,8 +1,10 @@
 import React from "react";
-import Uploader from "./uploader";
-import ProfilePic from "./profilepic";
-import Profile from "./profile";
-import axios from "axios";
+import Uploader from "./Uploader";
+import ProfilePic from "./Profilepic";
+import Profile from "./Profile";
+import axios from "./axios";
+import { Route, BrowserRouter, Link } from "react-router-dom";
+import OtherProfile from "./OtherProfile";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -36,23 +38,37 @@ export default class App extends React.Component {
                     />
                 </header>
 
-                <Profile
-                    bio={this.state.bio}
-                    changeBio={bio => {
-                        this.setState({
-                            bio: bio
-                        });
-                    }}
-                    image={this.state.image}
-                    first={this.state.first}
-                    last={this.state.last}
-                    onClick={() =>
-                        this.setState({
-                            uploaderIsVisible: true,
-                            bioIsVisible: true
-                        })
-                    }
-                />
+                <BrowserRouter>
+                    <div>
+                        <Route
+                            exact
+                            path="/"
+                            render={() => {
+                                return (
+                                    <Profile
+                                        bio={this.state.bio}
+                                        changeBio={bio =>
+                                            this.setState({
+                                                bio: bio
+                                            })
+                                        }
+                                        image={this.state.image}
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        onClick={() =>
+                                            this.setState({
+                                                uploaderIsVisible: true,
+                                                bioIsVisible: true
+                                            })
+                                        }
+                                    />
+                                );
+                            }}
+                        />
+                        <Route path="/user/:id" component={OtherProfile} />
+                        <Link to="/">home</Link>
+                    </div>
+                </BrowserRouter>
 
                 {this.state.uploaderIsVisible && (
                     <Uploader
@@ -73,7 +89,12 @@ export default class App extends React.Component {
         );
     }
 }
-// if (!this.state.id) {
-//     return null;
-// }
-//uploader needs to change app state, app state needs to change to make modal dissappear or automatially close when uploaded
+//PART 6
+//put users array into state!! when users change we'd need update the display
+
+//function FindPeople() {
+//const[users,setUsers] = useState();
+//const [val, setVal] = useState();
+//}
+
+//useEffect runs everytime the value changes. get new users everytime value changes
