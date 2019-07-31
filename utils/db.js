@@ -38,3 +38,16 @@ exports.addBio = function addBio(bio, id) {
         id
     ]);
 };
+
+exports.searchUsers = function searchUsers(val) {
+    return db.query(
+        `SELECT id, first, last, image FROM users WHERE first ILIKE $1;`,
+        [val + '%']
+    );
+}
+
+exports.getRecentUsers = function getRecentUsers() {
+    return db.query(
+        `SELECT id, first, last, image, bio FROM users ORDER BY created_at DESC LIMIT 3`
+    );
+};

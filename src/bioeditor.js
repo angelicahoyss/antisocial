@@ -88,7 +88,3 @@ export default class BioEditor extends React.Component {
         );
     }
 }
-
-//bioeditor needs some indicator what's in the state
-//two props and two state properties
-//ajax request, when successful set state editing false and call props done

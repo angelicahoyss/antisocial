@@ -78,20 +78,6 @@ app.post("/register", async (req, res) => {
         console.log("err in POST /register", err);
     }
 });
-//     console.log("request: ", req);
-//     console.log("password: ", req.body.password);
-//     bcrypt.hashPassword(req.body.password).then(hash => {
-//         return db
-//             .addUserInfo(req.body.first, req.body.last, req.body.email, hash)
-//             .then(results => {
-//                 //id
-//                 req.session.userId = results.rows[0].id;
-//                 res.json({ loggedIn: true }); //success
-//             })
-//             .catch(err => {
-//                 console.log("err in addUserInfo: ", err);
-//             });
-//     });
 
 app.post("/login", (req, res) => {
     db.getUser(req.body.email).then(results => {
@@ -147,8 +133,8 @@ app.get("/user", async (req, res) => {
         if (user.rows[0].image === null) {
             user.rows[0].image = "/images/default.jpg";
         }
-        console.log("USER.ROWS[0]:", user.rows[0]);
-        console.log("USER URL:", user.rows[0].image);
+        // console.log("USER.ROWS[0]:", user.rows[0]);
+        // console.log("USER URL:", user.rows[0].image);
         res.json(user.rows[0]);
     } catch (err) {
         console.log("err in GET / user", err);
@@ -182,6 +168,28 @@ app.get("/user/:id.json", async (req, res) => {
 
 });
 
+app.get("/users", (req, res) => {
+    db.getRecentUsers()
+        .then(results => {
+            // console.log("results in getRecentUsers:", results);
+            res.json(results.rows);
+        })
+        .catch(err => {
+            console.log("err in GET /users: ", err);
+        });
+});
+
+app.post("/users.json", (req, res) => {
+    db.searchUsers(req.body.val).then(results => {
+        res.json(results.rows);
+    }).catch(err => {
+        console.log("err in POST /search: ", err);
+        res.json({
+            error: true
+        });
+    });
+});
+
 //--------DO NOT DELETE THIS --------------
 app.get("*", (req, res) => {
     if (!req.session.userId && req.url != "/welcome") {
@@ -195,18 +203,3 @@ app.get("*", (req, res) => {
 app.listen(8080, function() {
     console.log("I'm listening.");
 });
-
-//3 components: 1. profile pic, 2. uploader(modal ui for uploading a file) and 3. wrapper called App, single component we pass to react.render
-//3. component will contain profile pic and uploader and a router in part 5.
-//modal should disable background so users can only upload or x
-//uploader will create form data, paste multer stuff in inxdex.js, s3 stuff, identical to imageboard except one difference
-//after s3 is done in imageboard we were inserting new table, instead, here we will do update query to set image req.session.user = newUrl
-//uploader makes new ajax request, append file only
-//as soon as you click on image it should be uploaded onChange handler on the input field. object fit center
-
-//-----part 4 -------
-//profile component renders profile pic and also print out name
-//component bio editor
-//<BioEditor bio={} />
-//bio editor ajax request, function changes app state, normal post no form data,
-//editing state prop set to true when user clicks a button//
