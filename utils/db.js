@@ -51,3 +51,40 @@ exports.getRecentUsers = function getRecentUsers() {
         `SELECT id, first, last, image, bio FROM users ORDER BY created_at DESC LIMIT 3`
     );
 };
+
+exports.getFriendships = function getFriendships() {
+    return db.query(
+        `SELECT * FROM friendships
+        WHERE (sender_id = $1 AND recever_id = $2)
+        OR (sender_id = $2 AND recever_id = $1)`
+    );
+};
+
+exports.addFriendship = function addFriendship(sender, receiver) {
+    return db.query(
+        `INSERT into friendships(sender_id, receiver_id, accepted)
+        VALUES ($1, $2, $3)
+        RETURNING sender_id, receiver_id. accepted`,
+        [sender, receiver]
+    );
+};
+
+exports.acceptFriendship = function acceptFriendship(sender, receiver) {
+    return db.query(
+        `UPDATE friendships
+        SET accepted = true
+        WHERE sender_id = $2 AND reciever_id = $1
+        RETURNING accepted
+        `,
+        [sender, receiver]
+    );
+};
+
+exports.cancelFriendship = function cancelFriendship(sender, receiver) {
+    return db.query(
+        `DELETE FROM friendships
+        WHERE (sender_id = $1 AND reciever_id = $2)
+        OR (sender_id = $2 AND reciever_id = $1)`,
+        [sender, receiver]
+    );
+};

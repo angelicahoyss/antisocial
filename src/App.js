@@ -92,12 +92,3 @@ export default class App extends React.Component {
         );
     }
 }
-//PART 6
-//put users array into state!! when users change we'd need update the display
-
-//function FindPeople() {
-//const[users,setUsers] = useState();
-//const [val, setVal] = useState();
-//}
-
-//useEffect runs everytime the value changes. get new users everytime value changes

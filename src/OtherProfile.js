@@ -27,7 +27,8 @@ export default class OtherProfile extends React.Component {
         );
     }
 }
-// <FriendButton OtherProfileId={this.props.match.params.id} />
+ // <FriendButton OtherProfileId={this.props.match.params.id} />
+
 
 //PART 7//
 //button changes to cancel when clicked on viewers Profile
