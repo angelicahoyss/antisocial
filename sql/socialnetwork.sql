@@ -16,6 +16,6 @@ DROP TABLE IF EXISTS friendships;
 CREATE TABLE friendships(
     id SERIAL,
     sender_id INT REFERENCES users(id),
-    recever_id INT REFERENCES users(id),
+    receiver_id INT REFERENCES users(id),
     accepted BOOLEAN DEFAULT false
 );

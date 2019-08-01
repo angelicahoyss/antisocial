@@ -1,21 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "./axios";
 
-export default function FriendButton() {
+export default function FriendButton(props) {
     const [button, setButton] = useState();
 
-    useEffect(
-        () => {
-            if (!searchUsers) {
-                (async () => {
-                    const usersList = await axios.get("/users");
-                    setUsers(usersList.data);
-                })();
-            } else {
-                (async () => {
-                    const searchList = await axios.post("/users.json",{val:searchUsers});
-                    setUsers(searchList.data);
-                })();
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data } = await axios.get(
+                    `/friendship/${props.OtherProfileId}.json`
+                );
+                console.log("DATA in FriendButton: ", data);
+                setButton(data.btnText);
+            } catch (err) {
+                console.log("err in useEffect GET /friendship: ", err);
             }
-        },
-        [searchUsers]);
+        })();
+    }, []);
+
+    async function submit() {
+        try {
+            if (button == "add friend") {
+                const { data } = await axios.post(
+                    `/friendrequest/${props.OtherProfileId}.json`,
+                    { button }
+                );
+                setButton(data.btnText);
+            } else if (button == "accept friend request") {
+                const { data } = await axios.post(
+                    `/acceptfriend/${props.OtherProfileId}.json`,
+                    { button }
+                );
+                setButton(data.btnText);
+            } else if (button == "unfriend") {
+                const { data } = await axios.post(
+                    `/unfriend/${props.OtherProfileId}.json`,
+                    { button }
+                );
+                setButton(data.btnText);
+            } else if (button == "cancel friend request") {
+                const { data } = await axios.post(
+                    `/cancelrequest/${props.OtherProfileId}.json`,
+                    { button }
+                );
+                setButton(data.btnText);
+            }
+        } catch (err) {
+            console.log("err in FriendButton POST /friendship", err);
+        }
+    }
+
+    return (
+        <div>
+            <button onClick={submit}>{button}</button>
+        </div>
+    );
+}

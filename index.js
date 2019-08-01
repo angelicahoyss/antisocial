@@ -190,22 +190,84 @@ app.post("/users.json", (req, res) => {
     });
 });
 
-app.get("friendshipstatus/:id.json", (req, res) => {
-    db.getFriendships(req.session.userId, req.params.id)
-    }).then(results => {
+app.get("/friendship/:otherProfileId.json", async (req, res) => {
+    try {
+        const results = await db.getFriendships(
+            req.session.userId,
+            req.params.otherProfileId
+        );
         if (!results.rows[0]) {
             res.json({
-                sender_id: req.session.userId,
-                receiver_id: req.params.id,
-                accepted: false
+                btnText: "add friend"
+            });
+        } else if (results.rows[0].accepted) {
+            res.json({
+                btnText: "unfriend"
+            });
+        } else if (results.rows[0].sender_id == req.params.otherProfileId) {
+            res.json({
+                btnText: "accept friend request"
             });
         } else {
             res.json({
-                results.rows[0]
+                btnText: "cancel friend request"
             });
         }
-    }).catch(err => {
-        console.log("err in GET /friendshipstatus: ", err);
+    } catch (err) {
+        console.log("err in GET /friendship: ", err);
+    }
+});
+
+app.post("/friendrequest/:otherProfileId.json", async (req, res) => {
+    try {
+        if (req.body.button == "add friend") {
+            await db.addFriendship(req.session.userId, req.params.otherProfileId);
+            res.json({
+                btnText: "cancel friend request"
+            });
+        }
+    } catch (err) {
+        console.log("err in POST /friendrequest: ", err);
+    }
+});
+
+app.post("/acceptfriend/:otherProfileId.json", async (req, res) => {
+    try {
+        if (req.body.button == "accept friend request") {
+            await db.acceptFriendship(req.session.userId, req.params.otherProfileId);
+            res.json({
+                btnText: "unfriend"
+            });
+        }
+    } catch (err) {
+        console.log("error in POST /acceptfriend: ", err);
+    }
+});
+
+app.post("/unfriend/:otherProfileId.json", async (req, res) => {
+    try {
+        if (req.body.button == "unfriend") {
+            await db.cancelFriendship(req.session.userId, req.params.otherProfileId);
+            res.json({
+                btnText: "add friend"
+            });
+        }
+    } catch (err) {
+        console.log("err in POST /unfriend: ", err);
+    }
+});
+
+app.post("/cancelrequest/:otherProfileId.json", async (req, res) => {
+    try {
+        if (req.body.button == "cancel friend request") {
+            await db.cancelFriendship(req.session.userId, req.params.otherProfileId);
+            res.json({
+                btnText: "add friend"
+            });
+        }
+    } catch (err) {
+        console.log("err in POST /cancelrequest: ", err);
+    }
 });
 
 

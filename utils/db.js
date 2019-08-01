@@ -52,40 +52,40 @@ exports.getRecentUsers = function getRecentUsers() {
     );
 };
 
-exports.getFriendships = function getFriendships(sender, receiver) {
+exports.getFriendships = function getFriendships(sender_id, receiver_id) {
     return db.query(
         `SELECT * FROM friendships
-        WHERE (sender_id = $1 AND recever_id = $2)
-        OR (sender_id = $2 AND recever_id = $1)`,
-        [sender, receiver]
+        WHERE (sender_id = $1 AND receiver_id = $2)
+        OR (sender_id = $2 AND receiver_id = $1)`,
+        [sender_id, receiver_id]
     );
 };
 
-exports.addFriendship = function addFriendship(sender, receiver) {
+exports.addFriendship = function addFriendship(sender_id, receiver_id) {
     return db.query(
-        `INSERT into friendships(sender_id, receiver_id, accepted)
-        VALUES ($1, $2, $3)
-        RETURNING sender_id, receiver_id, accepted`,
-        [sender, receiver]
+        `INSERT into friendships(sender_id, receiver_id)
+        VALUES ($1, $2)
+        RETURNING *`,
+        [sender_id, receiver_id]
     );
 };
 
-exports.acceptFriendship = function acceptFriendship(sender, receiver) {
+exports.acceptFriendship = function acceptFriendship(sender_id, receiver_id) {
     return db.query(
         `UPDATE friendships
         SET accepted = true
-        WHERE sender_id = $2 AND reciever_id = $1
+        WHERE sender_id = $2 AND receiver_id = $1
         RETURNING accepted
         `,
-        [sender, receiver]
+        [sender_id, receiver_id]
     );
 };
 
-exports.cancelFriendship = function cancelFriendship(sender, receiver) {
+exports.cancelFriendship = function cancelFriendship(sender_id, receiver_id) {
     return db.query(
         `DELETE FROM friendships
-        WHERE (sender_id = $1 AND reciever_id = $2)
-        OR (sender_id = $2 AND reciever_id = $1)`,
-        [sender, receiver]
+        WHERE (sender_id = $1 AND receiver_id = $2)
+        OR (sender_id = $2 AND receiver_id = $1)`,
+        [sender_id, receiver_id]
     );
 };
