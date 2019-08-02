@@ -6,6 +6,7 @@ import axios from "./axios";
 import { Route, BrowserRouter, Link } from "react-router-dom";
 import OtherProfile from "./OtherProfile";
 import FindPeople from "./FindPeople";
+import Friends from "./Friends";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -16,7 +17,7 @@ export default class App extends React.Component {
         };
     }
     async componentDidMount() {
-        const { data } = await axios.get("/user"); //add two cols to users table - col for bio and col for imageurl. id, first, last, image, bio
+        const { data } = await axios.get("/user");
         // console.log("data in APP:", data.user.rows[0]);
         // this.setState(data.user.rows[0]);
         this.setState(data);
@@ -68,8 +69,10 @@ export default class App extends React.Component {
                         />
                         <Route path="/user/:id" component={OtherProfile} />
                         <Route exact path="/users" component={FindPeople} />
+                        <Route exact path="/friends" component={Friends} />
                         <Link to="/">home</Link>
                         <Link to="/users">find people</Link>
+                        <Link to="/friends">friends</Link>
                     </div>
                 </BrowserRouter>
 

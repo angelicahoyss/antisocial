@@ -42,9 +42,9 @@ exports.addBio = function addBio(bio, id) {
 exports.searchUsers = function searchUsers(val) {
     return db.query(
         `SELECT id, first, last, image FROM users WHERE first ILIKE $1;`,
-        [val + '%']
+        [val + "%"]
     );
-}
+};
 
 exports.getRecentUsers = function getRecentUsers() {
     return db.query(
@@ -87,5 +87,19 @@ exports.cancelFriendship = function cancelFriendship(sender_id, receiver_id) {
         WHERE (sender_id = $1 AND receiver_id = $2)
         OR (sender_id = $2 AND receiver_id = $1)`,
         [sender_id, receiver_id]
+    );
+};
+
+exports.friendsWannabes = function friendsWannabes(id) {
+    return db.query(
+        `
+            SELECT users.id, first, last, image, accepted
+            FROM friendships
+            JOIN users
+            ON (accepted = false AND receiver_id = $1 AND sender_id = users.id)
+            OR (accepted = true AND receiver_id = $1 AND sender_id = users.id)
+            OR (accepted = true AND sender_id = $1 AND receiver_id = users.id)
+    `,
+        [id]
     );
 };

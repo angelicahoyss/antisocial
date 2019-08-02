@@ -80,7 +80,11 @@ export default class BioEditor extends React.Component {
                 )}
 
                 {this.state.showCancel ? (
-                    <button onClick={e => this.setState({ editing: false, showCancel: false })}>
+                    <button
+                        onClick={e =>
+                            this.setState({ editing: false, showCancel: false })
+                        }
+                    >
                         cancel
                     </button>
                 ) : null}

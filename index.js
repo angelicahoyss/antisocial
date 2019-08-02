@@ -139,7 +139,6 @@ app.get("/user", async (req, res) => {
     } catch (err) {
         console.log("err in GET / user", err);
     }
-
 });
 
 app.post("/bio", async (req, res) => {
@@ -165,7 +164,6 @@ app.get("/user/:id.json", async (req, res) => {
     } catch (err) {
         console.log("err in GET / user/:id.json", err);
     }
-
 });
 
 app.get("/users", (req, res) => {
@@ -180,14 +178,16 @@ app.get("/users", (req, res) => {
 });
 
 app.post("/users.json", (req, res) => {
-    db.searchUsers(req.body.val).then(results => {
-        res.json(results.rows);
-    }).catch(err => {
-        console.log("err in POST /search: ", err);
-        res.json({
-            error: true
+    db.searchUsers(req.body.val)
+        .then(results => {
+            res.json(results.rows);
+        })
+        .catch(err => {
+            console.log("err in POST /search: ", err);
+            res.json({
+                error: true
+            });
         });
-    });
 });
 
 app.get("/friendship/:otherProfileId.json", async (req, res) => {
@@ -221,7 +221,10 @@ app.get("/friendship/:otherProfileId.json", async (req, res) => {
 app.post("/friendrequest/:otherProfileId.json", async (req, res) => {
     try {
         if (req.body.button == "add friend") {
-            await db.addFriendship(req.session.userId, req.params.otherProfileId);
+            await db.addFriendship(
+                req.session.userId,
+                req.params.otherProfileId
+            );
             res.json({
                 btnText: "cancel friend request"
             });
@@ -234,7 +237,10 @@ app.post("/friendrequest/:otherProfileId.json", async (req, res) => {
 app.post("/acceptfriend/:otherProfileId.json", async (req, res) => {
     try {
         if (req.body.button == "accept friend request") {
-            await db.acceptFriendship(req.session.userId, req.params.otherProfileId);
+            await db.acceptFriendship(
+                req.session.userId,
+                req.params.otherProfileId
+            );
             res.json({
                 btnText: "unfriend"
             });
@@ -247,7 +253,10 @@ app.post("/acceptfriend/:otherProfileId.json", async (req, res) => {
 app.post("/unfriend/:otherProfileId.json", async (req, res) => {
     try {
         if (req.body.button == "unfriend") {
-            await db.cancelFriendship(req.session.userId, req.params.otherProfileId);
+            await db.cancelFriendship(
+                req.session.userId,
+                req.params.otherProfileId
+            );
             res.json({
                 btnText: "add friend"
             });
@@ -260,7 +269,10 @@ app.post("/unfriend/:otherProfileId.json", async (req, res) => {
 app.post("/cancelrequest/:otherProfileId.json", async (req, res) => {
     try {
         if (req.body.button == "cancel friend request") {
-            await db.cancelFriendship(req.session.userId, req.params.otherProfileId);
+            await db.cancelFriendship(
+                req.session.userId,
+                req.params.otherProfileId
+            );
             res.json({
                 btnText: "add friend"
             });
@@ -270,6 +282,14 @@ app.post("/cancelrequest/:otherProfileId.json", async (req, res) => {
     }
 });
 
+app.get("/friendswannabes", async (req, res) => {
+    try {
+        const { rows } = await db.friendsWannabes(req.session.userId);
+        res.json(rows);
+    } catch (err) {
+        console.log("err in GET /friendswannabes: ", err);
+    }
+});
 
 //--------DO NOT DELETE THIS --------------
 app.get("*", (req, res) => {
