@@ -23,7 +23,7 @@ export default class Registration extends React.Component {
                 password: this.state.password
             })
             .then(({ data }) => {
-                //same as resp and resp.data.success
+                //same as resp.data and resp.data.success
                 if (data.success) {
                     location.replace("/");
                 } else {
@@ -68,57 +68,3 @@ export default class Registration extends React.Component {
         );
     }
 }
-
-// function makePasta() {
-//     return new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             console.log("pasta's done!");
-//             resolve();
-//         }, 3000);
-//     });
-// }
-//
-// function makeSauce() {
-//     return new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             console.log("sauce's done!");
-//             resolve();
-//         }, 1000);
-//     });
-// }
-//
-// function grateCheese() {
-//     return new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             console.log("cheese's done!");
-//             resolve();
-//         }, 1500);
-//     });
-// }
-//
-// makePasta().then(() => {
-//     makeSauce().then(() => {
-//         grateCheese().then(() => {
-//             console.log("all done!");
-//         });
-//     });
-// });
-//
-// async function makeDinner() {
-//     try {
-//         const pastaPromise = makePasta();
-//         const saucePromise = makeSauce();
-//         const cheesePromise = grateCheese();
-//         return {
-//             pasta: await pastaPromise,
-//             sauce: await saucePromise,
-//             cheese: await cheesePromise
-//         };
-//     } catch (e) {
-//         console.log(e);
-//     }
-// }
-//
-// makeDinner();
-
-//Concurrency

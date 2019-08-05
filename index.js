@@ -235,8 +235,10 @@ app.post("/friendrequest/:otherProfileId.json", async (req, res) => {
 });
 
 app.post("/acceptfriend/:otherProfileId.json", async (req, res) => {
+    console.log("index post request for acceptfriend")
     try {
         if (req.body.button == "accept friend request") {
+            console.log("index conditional for acceptrequest")
             await db.acceptFriendship(
                 req.session.userId,
                 req.params.otherProfileId
