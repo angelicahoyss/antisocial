@@ -8,6 +8,8 @@ import OtherProfile from "./OtherProfile";
 import FindPeople from "./FindPeople";
 import Friends from "./Friends";
 
+import { Chat } from './chat';
+
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -70,9 +72,11 @@ export default class App extends React.Component {
                         <Route path="/user/:id" component={OtherProfile} />
                         <Route exact path="/users" component={FindPeople} />
                         <Route exact path="/friends" component={Friends} />
+                        <Route exact path="/chat" component={Chat} />
                         <Link to="/">home</Link>
                         <Link to="/users">find people</Link>
                         <Link to="/friends">friends</Link>
+                        <Link to="/chat">chat</Link>
                     </div>
                 </BrowserRouter>
 

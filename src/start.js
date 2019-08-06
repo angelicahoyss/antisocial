@@ -7,7 +7,10 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxPromise from "redux-promise";
 import reducer from "./reducers";
-// import "./css/style.class";
+import { init } from './socket';
+// import * as socket from "./socket";
+
+// import "./public/style.css";
 
 const store = createStore(
     reducer,
@@ -19,19 +22,12 @@ let elem;
 if (location.pathname == "/welcome") {
     elem = <Welcome />;
 } else {
+    init(store);
     elem = (
         <Provider store={store}>
             <App />
         </Provider>
     );
 }
-
-// if (location.pathname == "/welcome") {
-//     //they are loggedout
-//     elem = <Welcome />;
-// } else {
-//     elem = <App />;
-// }
-// //they are logged in
 
 ReactDOM.render(elem, document.querySelector("main"));

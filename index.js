@@ -11,6 +11,8 @@ const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
 const config = require("./config");
+const server = require('http').Server(app);
+const io = require('socket.io')(server, { origins: 'localhost:8080' });
 
 var diskStorage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -34,12 +36,22 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
-app.use(
-    cookieSession({
-        secret: "I'm always angry.",
-        maxAge: 1000 * 60 * 60 * 24 * 14
-    })
-);
+// app.use(
+//     cookieSession({
+//         secret: "I'm always angry.",
+//         maxAge: 1000 * 60 * 60 * 24 * 14
+//     })
+// );
+
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(csurf());
 app.use(function(req, res, next) {
@@ -303,6 +315,80 @@ app.get("*", (req, res) => {
 });
 //--------DO NOT DELETE THIS --------------
 
-app.listen(8080, function() {
+//------SERVER SIDE SOCKET CODE------------
+
+io.on('connection', function(socket) {
+    console.log(`a socket with the id ${socket.id} just connected`);
+    const userId = socket.request.session.userId;
+    if (!userId) {
+        return socket.disconnect(true);
+    }
+});
+
+/////PART 9/////
+
+// socket.on('my amazing chat message', msg => {
+//     console.log(`got message from front end.
+//         about to do the whole redux thing.
+//         my message ${msg}`);
+// });
+// //getting the last 10 chat messages.
+// // db.lastTenMessages().then(data=> {
+// //     //we have last 10 chats. new table for chats!!
+// //     socket.emit('chatMessages', data.rows)
+// // }).catch(err=>console.log(err));
+//
+// //part 2 is dealing with a new chat message.
+// socket.on('newMessage', function() {
+//     console.log('this is the new chat message', newMessage);
+//     //figure out who sent message.
+//     //then make db query to get info about that user.
+//     //THEN create a new message Object that matches the object in the last 10
+//     //chat messages
+//
+//     //emit that there is a new chat and pass the object.
+//     //add this chat message to our database.
+// });
+
+//------SERVER SIDE SOCKET CODE ENDS ------------
+
+// -----david's encounter-----
+// let mySocketId;
+
+// const onlineUsers = {};
+
+// io.on('connection', socket => {
+//     console.log(`a socket with the id ${socket.id} just connected`);
+//
+//     console.log(
+//         socket.request.headers //to know the id of the user
+//     );
+//
+//     socket.emit('greeting', {
+//         message: 'hey there, good looking'
+//     });
+//
+//     io.emit('newPlayer', {});
+//     io.sockets.emit('newPlayer', {});
+//
+//     // if (mySocketId) {
+//     //     io.sockets.sockets[mySocketId].emit('targetedMessage');
+//     // }
+//
+    // mySocketId = socket.id;
+//
+//     socket.on('niceToBeHere',
+//         payload => console.log(payload)
+//     );
+
+//      const onlineUserId = Object.values(onlineUsers);
+//
+//     socket.on('disconnect', () => {
+//          delete onlineUsers[socket.id];
+//         // console.log(`a socket with the id ${socket.id} just disconnected`);
+//     });
+// });
+
+server.listen(8080, function() {
     console.log("I'm listening.");
 });
