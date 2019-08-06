@@ -92,14 +92,32 @@ exports.cancelFriendship = function cancelFriendship(sender_id, receiver_id) {
 
 exports.friendsWannabes = function friendsWannabes(id) {
     return db.query(
-        `
-            SELECT users.id, first, last, image, accepted
-            FROM friendships
-            JOIN users
-            ON (accepted = false AND receiver_id = $1 AND sender_id = users.id)
-            OR (accepted = true AND receiver_id = $1 AND sender_id = users.id)
-            OR (accepted = true AND sender_id = $1 AND receiver_id = users.id)
-    `,
+        `SELECT users.id, first, last, image, accepted
+        FROM friendships
+        JOIN users
+        ON (accepted = false AND receiver_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND receiver_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND sender_id = $1 AND receiver_id = users.id)`,
         [id]
+    );
+};
+
+exports.saveMessage = function saveMessage(sender_id, message) {
+    return db.query(
+        `INSERT INTO chats (sender_id, message)
+        VALUES ($1, $2)
+        RETURNING *`,
+        [sender_id, message]
+    );
+};
+
+exports.lastTenMessages = function lastTenMessages() {
+    return db.query(
+        `SELECT chats.id, users.id as user_id, first, last, image, message, chats.created_at
+        FROM chats
+        LEFT JOIN users
+        ON users.id = chats.sender_id
+        ORDER BY chats.created_at DESC
+        LIMIT 10`
     );
 };

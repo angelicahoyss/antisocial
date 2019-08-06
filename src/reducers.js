@@ -32,5 +32,20 @@ export default function(state = {}, action) {
             })
         };
     }
+
+    if (action.type == "CHAT_MESSAGES") {
+        return {
+            ...state,
+            chatMessages: action.messages
+        };
+    }
+    
+    if (action.type == "NEW_MESSAGE") {
+        return {
+            ...state,
+            chatMessages: [...state.chatMessages, action.message]
+        };
+    }
+
     return state;
 }

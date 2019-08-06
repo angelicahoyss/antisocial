@@ -31,3 +31,17 @@ export async function acceptRequest(id) {
         id
     };
 }
+
+export function chatMessages(messages) {
+    return {
+        type: "CHAT_MESSAGES",
+        messages
+    };
+}
+
+export function chatMessage(message) {
+    return {
+        type: "NEW_MESSAGE",
+        message
+    };
+}

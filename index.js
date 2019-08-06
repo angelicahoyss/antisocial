@@ -323,7 +323,22 @@ io.on('connection', function(socket) {
     if (!userId) {
         return socket.disconnect(true);
     }
+
+
+    socket.on("send message", (data) => {
+        console.log("data from send message: ", data);
+        db.saveMessage(userId, data);
+    });
+
+    db.lastTenMessages().then(data=> {
+        socket.emit('chatMessages', data.rows)
+    }).catch(err => console.log(err));
+
+    socket.on('disconnect', function() {
+       console.log(`socket with the id ${socket.id} is now disconnected`);
+    });
 });
+
 
 /////PART 9/////
 
@@ -333,10 +348,10 @@ io.on('connection', function(socket) {
 //         my message ${msg}`);
 // });
 // //getting the last 10 chat messages.
-// // db.lastTenMessages().then(data=> {
-// //     //we have last 10 chats. new table for chats!!
-// //     socket.emit('chatMessages', data.rows)
-// // }).catch(err=>console.log(err));
+// db.lastTenMessages().then(data=> {
+//     //we have last 10 chats. new table for chats!!
+//     socket.emit('chatMessages', data.rows)
+// }).catch(err=>console.log(err));
 //
 // //part 2 is dealing with a new chat message.
 // socket.on('newMessage', function() {
