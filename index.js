@@ -305,6 +305,11 @@ app.get("/friendswannabes", async (req, res) => {
     }
 });
 
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/welcome");
+});
+
 //--------DO NOT DELETE THIS --------------
 app.get("*", (req, res) => {
     if (!req.session.userId && req.url != "/welcome") {

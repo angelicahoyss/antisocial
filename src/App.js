@@ -77,6 +77,7 @@ export default class App extends React.Component {
                         <Link to="/users">find people</Link>
                         <Link to="/friends">friends</Link>
                         <Link to="/chat">chat</Link>
+                        <a href="/logout">logout</a>
                     </div>
                 </BrowserRouter>
 

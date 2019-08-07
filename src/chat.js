@@ -12,20 +12,20 @@ export function Chat() {
     const elemRef = useRef();
 
     useEffect(()=> {
-        console.log("chat hooks mounted!");
-        console.log("elemRef", elemRef);
-        console.log("scroll top: ", elemRef.current.scrollTop); //zero
-        console.log("scroll height: ", elemRef.current.scrollHeight); //360
-        console.log("clientHeight: ", elemRef.current.clientHeight); //300
+        // console.log("chat hooks mounted!");
+        // console.log("elemRef", elemRef);
+        // console.log("scroll top: ", elemRef.current.scrollTop); //zero
+        // console.log("scroll height: ", elemRef.current.scrollHeight); //360
+        // console.log("clientHeight: ", elemRef.current.clientHeight); //300
         elemRef.current.scrollTop = elemRef.current.scrollHeight - elemRef.current.clientHeight;
     }, [chatMessages]);
     // console.log("here are my last 10 messages: ", chatMessages);
     const keyCheck = (e) => {
-        console.log("e.target.value:", e.target.value);
-        console.log("e.key", e.key);
+        // console.log("e.target.value:", e.target.value);
+        // console.log("e.key", e.key);
         if(e.key === "Enter") {
             e.preventDefault();
-            console.log("enter was pressed");
+            // console.log("enter was pressed");
             socket.emit("send message", e.target.value)
             e.target.value = "";
         }
