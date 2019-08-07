@@ -31,19 +31,25 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                <header>
-                    <img src="/images/logo.png" alt="logo" width={50} />
-                    <ProfilePic
-                        image={this.state.image}
-                        first={this.state.first}
-                        last={this.state.last}
-                        onClick={() =>
-                            this.setState({ uploaderIsVisible: true })
-                        }
-                    />
-                </header>
-
                 <BrowserRouter>
+                    <header className="header">
+                        <a href="/"><img src="/images/antisocial_lowall_logo.png" alt="logo" height={30} /></a>
+                        <nav className="navigation">
+                            <Link to="/users">find people</Link>
+                            <Link to="/friends">friends</Link>
+                            <Link to="/chat">chat</Link>
+                            <a href="/logout">logout</a>
+
+                            <ProfilePic
+                                image={this.state.image}
+                                first={this.state.first}
+                                last={this.state.last}
+                                onClick={() =>
+                                    this.setState({ uploaderIsVisible: true })
+                                }
+                            />
+                        </nav>
+                    </header>
                     <div>
                         <Route
                             exact
@@ -74,11 +80,6 @@ export default class App extends React.Component {
                         <Route exact path="/users" component={FindPeople} />
                         <Route exact path="/friends" component={Friends} />
                         <Route exact path="/chat" component={Chat} />
-                        <Link to="/">home</Link>
-                        <Link to="/users">find people</Link>
-                        <Link to="/friends">friends</Link>
-                        <Link to="/chat">chat</Link>
-                        <a href="/logout">logout</a>
                     </div>
                 </BrowserRouter>
 

@@ -1,3 +1,59 @@
+* {
+    box-sizing: border-box;
+    font-family: Raleway, sans-serif;
+
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+}
+
+.navigation {
+    display: flex;
+    align-items: flex-start;
+}
+
+.navigation a {
+    color: #3f3f3f;
+    font-family: Raleway, sans-serif;
+    letter-spacing: 0.1em;
+    font-weight: 800;
+    text-decoration: none;
+    padding: 30px;
+}
+
+.profileImage {
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+
+    padding: 10px;
+}
+
+/* .profileImageContainer {
+    margin-left: -25%;
+} */
+
+.welcome {
+    height: 100vh;
+    background-image: url("./images/undraw_friends_online_klj6 (1).svg");
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.welcome img {
+    margin: 20px;
+}
+
 .chat-container {
     height: 300px;
     width: 500px;

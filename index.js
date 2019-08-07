@@ -351,6 +351,15 @@ io.on('connection', async function(socket) {
     });
     io.emit('chatMessages', newMsg.rows.reverse());
 
+    socket.on('disconnect', function() {
+       console.log(`socket with the id ${socket.id} is now disconnected`);
+    });
+});
+
+server.listen(8080, function() {
+    console.log("I'm listening.");
+});
+
     // socket.on("send message", data => {
     //     // console.log("data from send message: ", data);
     //     db.saveMessage(userId, data).then(msgData => {
@@ -372,12 +381,6 @@ io.on('connection', async function(socket) {
     // db.lastTenMessages().then(data => {
     //     socket.emit('chatMessages', data.rows.reverse());
     // }).catch(err => console.log(err));
-
-    socket.on('disconnect', function() {
-       console.log(`socket with the id ${socket.id} is now disconnected`);
-    });
-});
-
 
 /////PART 9/////
 
@@ -442,7 +445,3 @@ io.on('connection', async function(socket) {
 //         // console.log(`a socket with the id ${socket.id} just disconnected`);
 //     });
 // });
-
-server.listen(8080, function() {
-    console.log("I'm listening.");
-});
