@@ -324,14 +324,22 @@ io.on('connection', function(socket) {
         return socket.disconnect(true);
     }
 
-
-    socket.on("send message", (data) => {
-        console.log("data from send message: ", data);
-        db.saveMessage(userId, data);
+    socket.on("send message", data => {
+        // console.log("data from send message: ", data);
+        db.saveMessage(userId, data).then(msgData => {
+            return db.getUserById(userId).then(results => {
+                console.log("from send message: ", results);
+                results.rows[0].user_id = results.rows[0].id;
+                results.rows[0].id = msgData.rows[0].id;
+                results.rows[0].message = msgData.rows[0].message;
+                results.rows[0].created_at = msgData.rows[0].created_at;
+                io.emit('chatMessage', results.rows[0]);
+            });
+        });
     });
 
-    db.lastTenMessages().then(data=> {
-        socket.emit('chatMessages', data.rows)
+    db.lastTenMessages().then(data => {
+        socket.emit('chatMessages', data.rows.reverse());
     }).catch(err => console.log(err));
 
     socket.on('disconnect', function() {

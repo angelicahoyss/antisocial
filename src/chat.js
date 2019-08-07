@@ -7,7 +7,7 @@ export function Chat() {
     const chatMessages = useSelector(
         state => state && state.chatMessages
     )
-    console.log("chatMessages: ", chatMessages);
+    // console.log("chatMessages: ", chatMessages);
 
     const elemRef = useRef();
 
@@ -18,7 +18,7 @@ export function Chat() {
         console.log("scroll height: ", elemRef.current.scrollHeight); //360
         console.log("clientHeight: ", elemRef.current.clientHeight); //300
         elemRef.current.scrollTop = elemRef.current.scrollHeight - elemRef.current.clientHeight;
-    }, []);
+    }, [chatMessages]);
     // console.log("here are my last 10 messages: ", chatMessages);
     const keyCheck = (e) => {
         console.log("e.target.value:", e.target.value);
@@ -40,6 +40,7 @@ export function Chat() {
                 chatMessages.map(user => (
                         <div key={user.id}>
                             <img src={user.image} alt={user.first} />
+                            <p>{user.first} {user.last} on {user.created_at}</p>
                             <p>{user.message}</p>
                         </div>
             ))}
@@ -50,21 +51,4 @@ export function Chat() {
             ></textarea>
         </div>
     );
-//     return (
-//         <div className="chat">
-//             <h1>chat room</h1>
-//             <div className="chat-container" ref={elemRef}>
-//                 <p>chat messages will go here. i am a chat.</p>
-//                 <p>chat messages will go here. i am a chat.</p>
-//                 <p>chat messages will go here. i am a chat.</p>
-//                 <p>chat messages will go here. i am a chat.</p>
-//                 <p>chat messages will go here. i am a chat.</p>
-//             </div>
-//             <textarea
-//                 placeholder = "add your message here"
-//                 onKeyDown = { keyCheck }
-//             >
-//             </textarea>
-//         </div>
-//     )
 }
