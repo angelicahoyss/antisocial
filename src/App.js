@@ -7,6 +7,7 @@ import { Route, BrowserRouter, Link } from "react-router-dom";
 import OtherProfile from "./OtherProfile";
 import FindPeople from "./FindPeople";
 import Friends from "./Friends";
+import Moment from "./moment";
 
 import { Chat } from './chat';
 
@@ -31,7 +32,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <header>
-                    <img src="/images/logo.png" alt="logo" width={150} />
+                    <img src="/images/logo.png" alt="logo" width={50} />
                     <ProfilePic
                         image={this.state.image}
                         first={this.state.first}

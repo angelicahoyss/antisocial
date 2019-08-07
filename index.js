@@ -11,6 +11,7 @@ const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
 const config = require("./config");
+const moment = require("moment");
 const server = require('http').Server(app);
 const io = require('socket.io')(server, { origins: 'localhost:8080' });
 
@@ -322,30 +323,55 @@ app.get("*", (req, res) => {
 
 //------SERVER SIDE SOCKET CODE------------
 
-io.on('connection', function(socket) {
+io.on('connection', async function(socket) {
     console.log(`a socket with the id ${socket.id} just connected`);
     const userId = socket.request.session.userId;
     if (!userId) {
         return socket.disconnect(true);
     }
 
-    socket.on("send message", data => {
-        // console.log("data from send message: ", data);
-        db.saveMessage(userId, data).then(msgData => {
-            return db.getUserById(userId).then(results => {
-                console.log("from send message: ", results);
-                results.rows[0].user_id = results.rows[0].id;
-                results.rows[0].id = msgData.rows[0].id;
-                results.rows[0].message = msgData.rows[0].message;
-                results.rows[0].created_at = msgData.rows[0].created_at;
-                io.emit('chatMessage', results.rows[0]);
-            });
-        });
+    socket.on('send message', async (data) => {
+        let saveMsg = await db.saveMessage(userId, data);
+        let user = await db.getUserById(userId);
+
+        saveMsg.rows[0].created_at = moment(
+            saveMsg.rows[0].created_at,
+            moment.ISO_8601
+        ).format("MMM Do YY");
+
+        const result = {...saveMsg.rows[0], ...user.rows[0]};
+
+        io.emit('chatMessage', result);
     });
 
-    db.lastTenMessages().then(data => {
-        socket.emit('chatMessages', data.rows.reverse());
-    }).catch(err => console.log(err));
+    const newMsg = await db.lastTenMessages();
+    // console.log("latestMsg", latestMsg.rows);
+    newMsg.rows.forEach(data => {
+        data.created_at = moment(data.created_at, moment.ISO_8601).format("MMM Do YY");
+    });
+    io.emit('chatMessages', newMsg.rows.reverse());
+
+    // socket.on("send message", data => {
+    //     // console.log("data from send message: ", data);
+    //     db.saveMessage(userId, data).then(msgData => {
+    //         return db.getUserById(userId).then(results => {
+    //             console.log("from send message: ", results);
+    //             results.rows[0].user_id = results.rows[0].id;
+    //             results.rows[0].id = msgData.rows[0].id;
+    //             results.rows[0].message = msgData.rows[0].message;
+    //             results.rows[0].created_at = msgData.rows[0].created_at;
+    //             results.rows[0].created_at = moment(
+    //                results.rows[0].created_at,
+    //                moment.ISO_8601
+    //)               .format("MMM Do YY");
+    //             io.emit('chatMessage', results.rows[0]);
+    //         });
+    //     });
+    // });
+
+    // db.lastTenMessages().then(data => {
+    //     socket.emit('chatMessages', data.rows.reverse());
+    // }).catch(err => console.log(err));
 
     socket.on('disconnect', function() {
        console.log(`socket with the id ${socket.id} is now disconnected`);
