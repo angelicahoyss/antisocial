@@ -26,15 +26,15 @@ export default function FindPeople({ id }) {
     return (
         <div className="find-people">
             {searchUsers ? (
-                <h3>find people</h3>
-            ) : (
                 <h3>are you looking for someone in particular?</h3>
+            ) : (
+                <h3>checkout who just joined!</h3>
             )}
             <input
-                placeholder="search"
+                placeholder="find friends"
                 onChange={e => setSearchUsers(e.target.value)}
             />
-            <h3>checkout who just joined!</h3>
+
             {users &&
                 users.map(user => (
                     <div key={user.id}>

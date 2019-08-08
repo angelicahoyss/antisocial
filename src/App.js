@@ -8,7 +8,6 @@ import OtherProfile from "./OtherProfile";
 import FindPeople from "./FindPeople";
 import Friends from "./Friends";
 import Moment from "./moment";
-
 import { Chat } from './chat';
 
 export default class App extends React.Component {

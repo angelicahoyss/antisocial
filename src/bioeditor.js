@@ -6,7 +6,9 @@ export default class BioEditor extends React.Component {
         super(props);
         this.state = {
             editing: false,
-            showCancel: false
+            showCancel: false,
+            editBio: "edit your bio",
+            addBio: "add your bio"
         };
     }
 
@@ -24,7 +26,9 @@ export default class BioEditor extends React.Component {
             .then(({ data }) => {
                 this.setState({
                     editing: false,
-                    showCancel: false
+                    showCancel: false,
+                    editBio: "edit your bio",
+                    addBio: "add your bio"
                 });
                 this.props.done(data);
             });
@@ -32,6 +36,8 @@ export default class BioEditor extends React.Component {
 
     render() {
         const isEditing = this.state.editing;
+        const { editBio } = this.state;
+        const { addBio } = this.state;
 
         return (
             <div className="bio-editor">
@@ -55,11 +61,12 @@ export default class BioEditor extends React.Component {
                             onClick={() =>
                                 this.setState({
                                     editing: true,
-                                    showCancel: true
+                                    showCancel: true,
+                                    editBio: ""
                                 })
                             }
                         >
-                            edit your bio
+                            {editBio}
                         </button>
                     </div>
                 )}
@@ -71,11 +78,12 @@ export default class BioEditor extends React.Component {
                             onClick={() =>
                                 this.setState({
                                     editing: true,
-                                    showCancel: true
+                                    showCancel: true,
+                                    addBio: ""
                                 })
                             }
                         >
-                            add bio
+                            {addBio}
                         </button>
                     </div>
                 )}
@@ -83,7 +91,12 @@ export default class BioEditor extends React.Component {
                 {this.state.showCancel ? (
                     <button
                         onClick={e =>
-                            this.setState({ editing: false, showCancel: false })
+                            this.setState({
+                                editing: false,
+                                showCancel: false,
+                                editBio: "edit your bio",
+                                addBio: "add your bio"
+                            })
                         }
                     >
                         cancel

@@ -330,7 +330,7 @@ io.on('connection', async function(socket) {
         return socket.disconnect(true);
     }
 
-    socket.on('send message', async (data) => {
+    socket.on('send message', async data => {
         let saveMsg = await db.saveMessage(userId, data);
         let user = await db.getUserById(userId);
 
