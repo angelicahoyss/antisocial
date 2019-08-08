@@ -13,7 +13,7 @@ export default function Friends() {
 
     return (
         <div className="friends-list">
-            <div>
+            <div className="friends">
                 <h2>friends list</h2>
                 {list &&
                     list
@@ -37,7 +37,7 @@ export default function Friends() {
                             </div>
                         ))}
             </div>
-            <div>
+            <div className="wannabes">
                 <h2>friend requests</h2>
                 {list &&
                     list

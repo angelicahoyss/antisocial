@@ -39,7 +39,7 @@ export default function(state = {}, action) {
             chatMessages: action.messages
         };
     }
-    
+
     if (action.type == "NEW_MESSAGE") {
         return {
             ...state,

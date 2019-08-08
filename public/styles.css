@@ -38,15 +38,15 @@
 
 .welcome {
     height: 100vh;
-    background-image: url("./images/undraw_friends_online_klj6 (1).svg");
+    background-image: url("./images/undraw_to_the_moon_v1mv.svg");
     background-position: center;
     background-repeat: no-repeat;
-
 }
 
 .welcome img {
-    margin: 20px;
+    margin: 40px;
 }
+
 #profile {
     padding: 20px;
 }
@@ -237,6 +237,16 @@ a:-webkit-any-link {
 
 .friends-list {
     margin: 30px 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.friends {
+    margin-left: 50px;
+}
+
+.wannabes {
+    margin-left: 50px;
 }
 
 .friends-list button {

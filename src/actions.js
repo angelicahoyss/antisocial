@@ -9,11 +9,9 @@ export async function receiveUsers() {
 }
 
 export async function unfriend(id) {
-    console.log("unfriend action working")
     const { data } = await axios.post(`/unfriend/${id}.json`, {
         button: "unfriend"
     });
-    // console.log("data unfriend", data);
     return {
         type: "UNFRIEND",
         id
@@ -21,11 +19,9 @@ export async function unfriend(id) {
 }
 
 export async function acceptRequest(id) {
-    console.log("accept action working")
     const { data } = await axios.post(`/acceptfriend/${id}.json`, {
         button: "accept friend request"
     });
-    // console.log("data accept", data);
     return {
         type: "ACCEPT_REQUEST",
         id

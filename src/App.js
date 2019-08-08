@@ -9,6 +9,7 @@ import FindPeople from "./FindPeople";
 import Friends from "./Friends";
 import Moment from "./moment";
 import { Chat } from './chat';
+// import Notification from './notification';
 
 export default class App extends React.Component {
     constructor(props) {

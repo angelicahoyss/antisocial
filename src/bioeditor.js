@@ -12,6 +12,10 @@ export default class BioEditor extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.setState((state, props) => ({ draftBio : props.bio }));
+    }
+
     changeBio(e) {
         this.setState({
             draftBio: e.target.value
@@ -44,6 +48,7 @@ export default class BioEditor extends React.Component {
                 {isEditing && (
                     <div>
                         <textarea
+                            value = {this.state.newBio}
                             placeholder="start typing..."
                             name="draftBio"
                             onChange={e => {

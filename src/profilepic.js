@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function({ image, first, last, onClick, size }) {
-    image = image || "/images/default.jpg";
+    image = image || "/images/default-copy.png";
     return (
         <div className="profileImageContainer">
             <img

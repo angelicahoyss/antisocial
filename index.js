@@ -136,7 +136,6 @@ app.post("/upload", uploader.single("file"), s3.upload, async (req, res) => {
     }
 });
 
-//show default image if there is none
 app.get("/user", async (req, res) => {
     try {
         let user = await db.getUserById(req.session.userId);
@@ -144,7 +143,7 @@ app.get("/user", async (req, res) => {
         // console.log("user:", user.rows[0]);
 
         if (user.rows[0].image === null) {
-            user.rows[0].image = "/images/default.jpg";
+            user.rows[0].image = "/images/default-copy.png";
         }
         // console.log("USER.ROWS[0]:", user.rows[0]);
         // console.log("USER URL:", user.rows[0].image);
@@ -251,7 +250,7 @@ app.post("/acceptfriend/:otherProfileId.json", async (req, res) => {
     console.log("index post request for acceptfriend")
     try {
         if (req.body.button == "accept friend request") {
-            console.log("index conditional for acceptrequest")
+            // console.log("index conditional for acceptrequest")
             await db.acceptFriendship(
                 req.session.userId,
                 req.params.otherProfileId
@@ -350,6 +349,12 @@ io.on('connection', async function(socket) {
         data.created_at = moment(data.created_at, moment.ISO_8601).format("MMM Do YY");
     });
     io.emit('chatMessages', newMsg.rows.reverse());
+
+    socket.on("new friend request", obj => {
+        //check wheteher the receiver has a socket id. if it's true, emit event only to this socket
+        //io.emit to specific socekts an event saying 'new friend request'. in socket listen to the emit.
+        //creates a prop in state of new friend request
+    })
 
     socket.on('disconnect', function() {
        console.log(`socket with the id ${socket.id} is now disconnected`);

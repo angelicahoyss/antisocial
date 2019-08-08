@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import { chatMessages, chatMessage } from './actions';
+import { chatMessages, chatMessage, acceptRequest } from './actions';
 
 export let socket;
 
@@ -20,6 +20,13 @@ export const init = store => {
                 chatMessage(msg)
             )
         );
+
+        // socket.on(
+        //     'acceptRequest',
+        //     not => store.dispatch(
+        //         receiveUsers(not)
+        //     )
+        // );
     }
 };
 

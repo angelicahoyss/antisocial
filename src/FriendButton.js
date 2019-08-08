@@ -25,6 +25,7 @@ export default function FriendButton(props) {
                     `/friendrequest/${props.OtherProfileId}.json`,
                     { button }
                 );
+                // socket.emit("new friend request", { sender: sender_id, receiver: receiver_id });
                 setButton(data.btnText);
             } else if (button == "accept friend request") {
                 const { data } = await axios.post(
