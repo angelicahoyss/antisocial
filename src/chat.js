@@ -40,8 +40,8 @@ export function Chat() {
                 chatMessages.map(user => (
                         <div key={user.id}>
                             <img src={user.image} alt={user.first} />
-                            <p>{user.first} {user.last} on {user.created_at}</p>
                             <p>{user.message}</p>
+                            <div className="username">- {user.first} {user.last} on {user.created_at}</div>
                         </div>
             ))}
             </div>

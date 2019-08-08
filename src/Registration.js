@@ -36,9 +36,6 @@ export default class Registration extends React.Component {
     render() {
         return (
             <div className="registration">
-                <div>
-                    {this.state.error && <div className="error">oops!</div>}
-                </div>
                 <input
                     name="first"
                     onChange={e => this.handleChange(e)}
@@ -61,8 +58,11 @@ export default class Registration extends React.Component {
                     onChange={e => this.handleChange(e)}
                 />
                 <button onClick={e => this.submit()}>register</button>
+                <div>
+                    {this.state.error && <div className="error">oops!</div>}
+                </div>
                 <p>
-                    already a member?<Link to="/login">Login</Link>
+                    already a member? <Link to="/login">login.</Link>
                 </p>
             </div>
         );

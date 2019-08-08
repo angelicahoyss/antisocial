@@ -8,7 +8,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px;
+    margin: 20px 40px;
 }
 
 .navigation {
@@ -20,27 +20,21 @@
     color: #3f3f3f;
     font-family: Raleway, sans-serif;
     letter-spacing: 0.1em;
-    font-weight: 800;
+    font-weight: 600;
     text-decoration: none;
     padding: 30px;
 }
 
 .profileImage {
     object-fit: cover;
-    width: 100px;
-    height: 100px;
+    width: 80px;
     position: relative;
     overflow: hidden;
     border-radius: 50%;
-    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
-
     padding: 10px;
 }
-
-/* .profileImageContainer {
-    margin-left: -25%;
-} */
 
 .welcome {
     height: 100vh;
@@ -53,9 +47,298 @@
 .welcome img {
     margin: 20px;
 }
+#profile {
+    padding: 20px;
+}
+#profile img {
+    width: 200px;
+}
+
+#profile p {
+    margin: 20px;
+    width: 500px;
+}
+
+#profile button {
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    color: #3f3f3f;
+    background-color: inherit;
+    font-family: Raleway, sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 0.2em;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 0;
+}
+
+.bio-editor textarea {
+    background-color: white;
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+    outline-width: 0;
+    height: 100px;
+    width: 500px;
+    font-weight: 200;
+    font-size: 15px;
+    color: black;
+    margin-left: 20px;
+    display: block;
+    padding: 0;
+}
+
+.profile-name {
+    margin: 20px;
+    font-size: 50px;
+    font-weight: 200;
+}
+
+.uploader {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    background-image: url("./images/undraw_taking_selfie_lbo7.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.uploader h1 {
+    font-weight: 400;
+    margin-top: 120px;
+    margin-left: 100px;
+    letter-spacing: 0.1em;
+
+}
+
+.uploader button {
+    position: relative;
+    float: right;
+    font-size: 60px;
+    font-weight: 100;
+    color: gray;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    margin: 20px;
+}
+
+.inputfile {
+    width: 200px;
+    height: 45px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    cursor: crosshair;
+    margin-left: 100px;
+}
+
+.inputfile + label {
+    font-size: 15px;
+    font-weight: 200;
+    color: black;
+    background-color: white;
+    display: inline-block;
+    margin-left: 100px;
+    margin-top: 20px;
+    font-family: Raleway, sans-serif;
+    letter-spacing: 0.2em;
+    cursor: crosshair;
+}
+
+.find-people h3, .friends-list h2, .chat h1, .login h1 {
+    margin-left: 50px;
+    margin-top: 30px;
+    letter-spacing: 0.1em;
+    font-weight: 200;
+}
+
+.other-profile img, .find-people img, .friends-list img {
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.find-people p, .friends-list p {
+    margin-left: 50px;
+    color: #3f3f3f;
+    font-family: Raleway, sans-serif;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+
+a:-webkit-any-link {
+    text-decoration: none;
+}
+
+.find-people input {
+    -webkit-appearance: none;
+    border: none;
+    background-color: white;
+    outline: none;
+    outline-width: 0;
+    height: 40px;
+    width: 300px;
+    font-weight: 200;
+    font-size: 15px;
+    color: black;
+    margin-left: 50px;
+    display: block;
+    padding: 0;
+    /* border: 1px solid #3f3f3f; */
+}
+
+.other-profile button, .registration button, .login button {
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    color: #3f3f3f;
+    background-color: inherit;
+    font-family: Raleway, sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 0.2em;
+    margin-top: 20px;
+    margin-left: 50px;
+    padding: 0;
+}
+
+.other-profile-name {
+    margin-left: 50px;
+    margin-top: 20px;
+    font-size: 50px;
+    font-weight: 200;
+}
+
+.other-profile p {
+    margin-left: 50px;
+    margin-top: 20px;
+    width: 500px;
+}
+
+.friends-list {
+    margin: 30px 0;
+}
+
+.friends-list button {
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    color: #3f3f3f;
+    background-color: white;
+    font-family: Raleway, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    margin-top: 10px;
+    margin-left: 50px;
+    padding: 0;
+}
+/* .chat {
+
+} */
 
 .chat-container {
-    height: 300px;
-    width: 500px;
+    height: 500px;
+    width: 400px;
+    margin-left: 50px;
     overflow-y: scroll;
 }
+
+.chat-container img {
+    object-fit: cover;
+    width: 80px;
+    height: 80px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    margin-top: 20px;
+}
+
+.chat textarea {
+    background-color: white;
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+    outline-width: 0;
+    height: 100px;
+    width: 400px;
+    font-weight: 200;
+    font-size: 15px;
+    color: black;
+    margin-left: 50px;
+    margin-top: 30px;
+    display: block;
+    padding: 0;
+}
+
+.chat-container .username {
+    font-weight: 600;
+}
+
+.chat-container p {
+    margin: 0;
+}
+
+.registration {
+    margin-top: 30px;
+}
+
+.registration input, .login input {
+    -webkit-appearance: none;
+    border: none;
+    background-color: inherit;
+    outline: none;
+    outline-width: 0;
+    height: 40px;
+    width: 300px;
+    font-weight: 200;
+    font-size: 15px;
+    color: black;
+    margin-left: 50px;
+    display: block;
+    padding: 0;
+}
+
+::placeholder {
+  color: black;
+  letter-spacing: 0.1em;
+}
+
+.registration p {
+    margin-left: 50px;
+    color: #3f3f3f;
+    text-decoration: none;
+}
+
+
+
+/* .friends-list h2 {
+    margin-left: 50px;
+    margin-top: 30px;
+    letter-spacing: 0.1em;
+    font-weight: 200;
+} */

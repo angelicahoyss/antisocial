@@ -12,7 +12,7 @@ export default function Friends() {
     },[]);
 
     return (
-        <div>
+        <div className="friends-list">
             <div>
                 <h2>friends list</h2>
                 {list &&

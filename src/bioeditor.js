@@ -34,10 +34,11 @@ export default class BioEditor extends React.Component {
         const isEditing = this.state.editing;
 
         return (
-            <div>
+            <div className="bio-editor">
                 {isEditing && (
                     <div>
                         <textarea
+                            placeholder="start typing..."
                             name="draftBio"
                             onChange={e => {
                                 this.changeBio(e);

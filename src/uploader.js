@@ -28,12 +28,12 @@ export default class Uploader extends React.Component {
         return (
             <div className="uploader">
                 <button className="close-btn" onClick={e => this.close(e)}>
-                    close
+                    X
                 </button>
                 <h1>do you want to change profile picture?</h1>
                 <input
                     type="file"
-                    className="file"
+                    className="inputfile"
                     name="file"
                     accept="image/*"
                     onChange={e => this.upload(e)}

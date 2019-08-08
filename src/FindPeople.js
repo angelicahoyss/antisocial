@@ -24,16 +24,17 @@ export default function FindPeople({ id }) {
     }, [searchUsers]);
 
     return (
-        <div>
+        <div className="find-people">
             {searchUsers ? (
                 <h3>find people</h3>
             ) : (
-                <h3>checkout who just joined!</h3>
+                <h3>are you looking for someone in particular?</h3>
             )}
             <input
                 placeholder="search"
                 onChange={e => setSearchUsers(e.target.value)}
             />
+            <h3>checkout who just joined!</h3>
             {users &&
                 users.map(user => (
                     <div key={user.id}>
@@ -42,12 +43,10 @@ export default function FindPeople({ id }) {
                                 src={user.image}
                                 alt={`${user.first} ${user.last}`}
                             />
-                            <p>{user.first}</p>
-                            <p>{user.last}</p>
+                            <p>{user.first} {user.last}</p>
                         </Link>
                     </div>
                 ))}
-            <h3>are you looking for someone in particular?</h3>
         </div>
     );
 }

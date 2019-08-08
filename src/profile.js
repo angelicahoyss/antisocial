@@ -6,12 +6,13 @@ export default function Profile(props) {
     return (
         <div id="profile">
             <ProfilePic
+                size="jumbo"
                 image={props.image}
                 first={props.first}
                 last={props.last}
                 onClick={props.onClick}
             />
-            <div>{`${props.first} ${props.last}`}</div>
+            <div className="profile-name">{`${props.first} ${props.last}`}</div>
             <BioEditor bio={props.bio} done={props.changeBio} />
         </div>
     );
