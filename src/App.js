@@ -9,7 +9,9 @@ import FindPeople from "./FindPeople";
 import Friends from "./Friends";
 import Moment from "./moment";
 import { Chat } from './chat';
-// import Notification from './notification';
+import Notification from './notification';
+import { receiveUsers  } from "./actions";
+import { useSelector , useDispatch} from 'react-redux';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -21,9 +23,14 @@ export default class App extends React.Component {
     }
     async componentDidMount() {
         const { data } = await axios.get("/user");
+        const friends = await axios.get("/friendswannabes");
+        console.log(friends.data)
         // console.log("data in APP:", data.user.rows[0]);
         // this.setState(data.user.rows[0]);
-        this.setState(data);
+        this.setState({
+           ...data,
+           friends : friends.data
+       });
     }
     catch(err) {
         console.log("err in axios mount", err);
@@ -36,7 +43,7 @@ export default class App extends React.Component {
                         <a href="/"><img src="/images/antisocial_lowall_logo.png" alt="logo" height={30} /></a>
                         <nav className="navigation">
                             <Link to="/users">find people</Link>
-                            <Link to="/friends">friends | </Link>
+                            <Link to="/friends"> friends<Notification/> </Link>
                             <Link to="/chat">chat</Link>
                             <a href="/logout">logout</a>
 

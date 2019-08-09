@@ -40,7 +40,7 @@ export default function FindPeople({ id }) {
                     <div key={user.id}>
                         <Link to={`/user/${user.id}`}>
                             <img
-                                src={user.image}
+                                src={user.image || "/images/default-copy.png"}
                                 alt={`${user.first} ${user.last}`}
                             />
                             <p>{user.first} {user.last}</p>

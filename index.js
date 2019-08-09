@@ -15,6 +15,8 @@ const moment = require("moment");
 const server = require('http').Server(app);
 const io = require('socket.io')(server, { origins: 'localhost:8080' });
 
+const socketsIdMap = {}
+
 var diskStorage = multer.diskStorage({
     destination: function(req, file, callback) {
         callback(null, __dirname + "/uploads");
@@ -232,11 +234,14 @@ app.get("/friendship/:otherProfileId.json", async (req, res) => {
 
 app.post("/friendrequest/:otherProfileId.json", async (req, res) => {
     try {
-        if (req.body.button == "add friend") {
+        if (req.body.button == "add friend")
+        {
             await db.addFriendship(
                 req.session.userId,
                 req.params.otherProfileId
             );
+            if(socketsIdMap[ req.params.otherProfileId ])
+                socketsIdMap[ req.params.otherProfileId ].emit("new friend request", { sender: req.session.userId, receiver: req.params.otherProfileId });
             res.json({
                 btnText: "cancel friend request"
             });
@@ -325,6 +330,9 @@ app.get("*", (req, res) => {
 io.on('connection', async function(socket) {
     console.log(`a socket with the id ${socket.id} just connected`);
     const userId = socket.request.session.userId;
+
+    socketsIdMap[userId] = socket;
+
     if (!userId) {
         return socket.disconnect(true);
     }
@@ -350,14 +358,15 @@ io.on('connection', async function(socket) {
     });
     io.emit('chatMessages', newMsg.rows.reverse());
 
-    socket.on("new friend request", obj => {
-        //check wheteher the receiver has a socket id. if it's true, emit event only to this socket
-        //io.emit to specific socekts an event saying 'new friend request'. in socket listen to the emit.
-        //creates a prop in state of new friend request
-    })
+    // socket.on("new friend request", obj => {
+    //     //check wheteher the receiver has a socket id. if it's true, emit event only to this socket
+    //     //io.emit to specific socekts an event saying 'new friend request'. in socket listen to the emit.
+    //     //creates a prop in state of new friend request
+    // })
 
     socket.on('disconnect', function() {
-       console.log(`socket with the id ${socket.id} is now disconnected`);
+        socketsIdMap[userId] = undefined;
+        console.log(`socket with the id ${socket.id} is now disconnected`);
     });
 });
 
