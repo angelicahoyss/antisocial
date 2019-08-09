@@ -36,7 +36,7 @@ export default class App extends React.Component {
                         <a href="/"><img src="/images/antisocial_lowall_logo.png" alt="logo" height={30} /></a>
                         <nav className="navigation">
                             <Link to="/users">find people</Link>
-                            <Link to="/friends">friends</Link>
+                            <Link to="/friends">friends | </Link>
                             <Link to="/chat">chat</Link>
                             <a href="/logout">logout</a>
 
