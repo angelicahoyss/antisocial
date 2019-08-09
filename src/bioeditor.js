@@ -48,7 +48,7 @@ export default class BioEditor extends React.Component {
                 {isEditing && (
                     <div>
                         <textarea
-                            value = {this.state.newBio}
+                            defaultValue ={this.props.bio}
                             placeholder="start typing..."
                             name="draftBio"
                             onChange={e => {
