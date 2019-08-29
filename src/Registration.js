@@ -62,7 +62,7 @@ export default class Registration extends React.Component {
                     {this.state.error && <div className="error">oops!</div>}
                 </div>
                 <p>
-                    already a member? <Link to="/login">login.</Link>
+                    already a member? <Link style={{ textDecoration: 'none', color: 'white' }} to="/login">login.</Link>
                 </p>
             </div>
         );

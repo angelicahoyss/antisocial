@@ -142,7 +142,7 @@ app.get("/user", async (req, res) => {
     try {
         let user = await db.getUserById(req.session.userId);
         // user = user.rows[0];
-        // console.log("user:", user.rows[0]);
+        console.log("user:", user.rows[0]);
 
         if (user.rows[0].image === null) {
             user.rows[0].image = "/images/default-copy.png";

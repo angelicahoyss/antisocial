@@ -10,7 +10,7 @@ import Friends from "./Friends";
 import Moment from "./moment";
 import { Chat } from './chat';
 import Notification from './notification';
-import { receiveUsers  } from "./actions";
+import { receiveUsers } from "./actions";
 import { useSelector , useDispatch} from 'react-redux';
 
 export default class App extends React.Component {
