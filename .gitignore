@@ -1,5 +1,5 @@
 node_modules
 .DS_Store
 secrets.json
-readme.md
+classnotes.md
 package-lock.json
