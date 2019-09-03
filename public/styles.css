@@ -76,6 +76,11 @@
     padding: 0;
 }
 
+#profile button:hover {
+    color: grey;
+    cursor: crosshair;
+}
+
 .bio-editor textarea {
     background-color: white;
     -webkit-appearance: none;
@@ -221,7 +226,10 @@ a:-webkit-any-link {
     margin-left: 50px;
     padding: 0;
 }
-
+.login button:hover, .registration button:hover, .other-profile button:hover {
+    color: grey;
+    cursor: crosshair;
+}
 .other-profile-name {
     margin-left: 50px;
     margin-top: 20px;
@@ -268,7 +276,10 @@ a:-webkit-any-link {
 /* .chat {
 
 } */
-
+.friends-list button:hover {
+    color: grey;
+    cursor: crosshair;
+}
 .chat-container {
     height: 500px;
     width: 400px;
