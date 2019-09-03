@@ -14,6 +14,22 @@ Social network built with React.js using Hooks and Redux, Node.js, PostgreSQL, S
 
 <img src='./login.gif' />
 
-#### Biography editing
+#### Biography Editing
 
 <img src='./editbio.gif' />
+
+#### Profile Picture Upload
+
+<img src='./profilepic.gif' />
+
+#### Search Users and Add Friends
+
+<img src='./search.gif' />
+
+#### Accepting Friends Requests and Socket.IO Notifications
+
+<img src='./accept.gif' />
+
+#### Chat Room
+
+<img src='./chat.gif' />

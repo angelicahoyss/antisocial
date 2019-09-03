@@ -180,7 +180,7 @@ app.get("/user/:id.json", async (req, res) => {
     }
 });
 
-app.get("/users", (req, res) => {
+app.get("/users.json", (req, res) => {
     db.getRecentUsers()
         .then(results => {
             // console.log("results in getRecentUsers:", results);
