@@ -10,7 +10,10 @@ Social network built with React.js using Hooks and Redux, Node.js, PostgreSQL, S
 
 ## Preview
 
-#### Homepage
+#### Homepage and Login
 
+<img src='./login.gif' />
 
+#### Biography editing
 
+<img src='./editbio.gif' />
